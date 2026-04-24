@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berkah Pak Lurah</title>
+    <meta name="description" content="Jual kambing, sapi, dan domba sehat untuk qurban. Free ongkir radius 10km.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#16a34a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .card-hover { transition: all 0.2s ease; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.08); }
+        .img-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+.modal-img-contain {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+        .skeleton { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+      .img img {
+        max-width: 50px; /* Atur lebar maksimum logo */
+        height: auto; /* Jaga rasio aspek */
+      }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- NAVBAR -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2">
+                <span class="text-2xl img">
+                    <img src="/logo.png" alt="">
+                </span>
+                <div>
+                    <span class="text-xl font-bold text-green-700">Berkah</span>
+                    <span class="text-xl font-light text-gray-400"> Pak Lurah</span>
+                </div>
+            </a>
+            <div class="flex items-center gap-4">
+                <a href="#katalog" class="text-sm font-medium text-gray-600 hover:text-green-700 transition hidden md:block">Katalog</a>
+                <a href="https://wa.me/6285742651615" target="_blank"
+                   class="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-700 transition text-sm font-medium">
+                    💬 Hubungi Kami
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="bg-gradient-to-br from-green-900 via-green-800 to-green-600 text-white py-20 px-4">
+        <div class="max-w-6xl mx-auto text-center">
+            <span class="inline-block bg-white/15 text-white text-xs font-medium px-4 py-1.5 rounded-full mb-6 tracking-wider uppercase">
+                🌙 Siap Qurban 1446 H
+            </span>
+            <h1 class="text-4xl md:text-6xl font-bold mb-5 leading-tight">
+                Hewan Ternak <br class="hidden md:block">
+                <span class="text-green-300">Sehat & Terpercaya</span>
+            </h1>
+            <p class="text-green-100 text-lg mb-10 max-w-xl mx-auto">
+                Kambing, Sapi & Domba pilihan langsung dari kandang. Sehat, gemuk, dan siap untuk kebutuhan Anda.
+            </p>
+            <div class="flex flex-wrap justify-center gap-3 text-sm">
+                <span class="bg-white/10 border border-white/20 px-4 py-2 rounded-full">✅ Hewan Sehat & Gemuk</span>
+                <span class="bg-white/10 border border-white/20 px-4 py-2 rounded-full">🚚 Free Ongkir 10km</span>
+                <span class="bg-white/10 border border-white/20 px-4 py-2 rounded-full">🛡️ Garansi Hewan</span>
+                <span class="bg-white/10 border border-white/20 px-4 py-2 rounded-full">🏠 Free Penitipan</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FILTER -->
+    <section class="max-w-6xl mx-auto px-4 -mt-6 relative z-10" id="katalog">
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
+                <div>
+                    <label class="text-xs font-medium text-gray-500 mb-1.5 block uppercase tracking-wider">Jenis Hewan</label>
+                    <select id="filterKategori" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-gray-50">
+                        <option value="">Semua Hewan</option>
+                        <option value="Kambing">Kambing</option>
+                        <option value="Sapi">Sapi</option>
+                        <option value="Domba">Domba</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-xs font-medium text-gray-500 mb-1.5 block uppercase tracking-wider">Harga Min</label>
+                    <input type="number" id="filterMinHarga" placeholder="Rp 0"
+                        class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-gray-50">
+                </div>
+                <div>
+                    <label class="text-xs font-medium text-gray-500 mb-1.5 block uppercase tracking-wider">Harga Max</label>
+                    <input type="number" id="filterMaxHarga" placeholder="Rp ∞"
+                        class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-gray-50">
+                </div>
+                <div class="flex items-center gap-2 pb-1">
+                    <input type="checkbox" id="filterQurban" class="w-4 h-4 accent-green-600">
+                    <label for="filterQurban" class="text-sm text-gray-600 cursor-pointer">Siap Qurban</label>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="applyFilter()" class="flex-1 bg-green-600 hover:bg-green-700 text-white rounded-xl py-2.5 text-sm font-medium transition">
+                        Cari
+                    </button>
+                    <button onclick="resetFilter()" class="flex-1 border border-gray-200 hover:bg-gray-50 rounded-xl py-2.5 text-sm text-gray-600 transition">
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUK GRID -->
+    <section class="max-w-6xl mx-auto px-4 py-12">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-lg font-semibold text-gray-800">
+                <span id="jumlahHewan" class="text-green-600">...</span> hewan tersedia
+            </h2>
+        </div>
+
+        <!-- Skeleton loading -->
+        <div id="skeleton" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            <div class="bg-white rounded-2xl overflow-hidden border border-gray-100">
+                <div class="skeleton h-48 w-full"></div>
+                <div class="p-4 space-y-2">
+                    <div class="skeleton h-4 w-1/2 rounded"></div>
+                    <div class="skeleton h-4 w-3/4 rounded"></div>
+                    <div class="skeleton h-4 w-1/3 rounded"></div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl overflow-hidden border border-gray-100">
+                <div class="skeleton h-48 w-full"></div>
+                <div class="p-4 space-y-2">
+                    <div class="skeleton h-4 w-1/2 rounded"></div>
+                    <div class="skeleton h-4 w-3/4 rounded"></div>
+                    <div class="skeleton h-4 w-1/3 rounded"></div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl overflow-hidden border border-gray-100">
+                <div class="skeleton h-48 w-full"></div>
+                <div class="p-4 space-y-2">
+                    <div class="skeleton h-4 w-1/2 rounded"></div>
+                    <div class="skeleton h-4 w-3/4 rounded"></div>
+                    <div class="skeleton h-4 w-1/3 rounded"></div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl overflow-hidden border border-gray-100">
+                <div class="skeleton h-48 w-full"></div>
+                <div class="p-4 space-y-2">
+                    <div class="skeleton h-4 w-1/2 rounded"></div>
+                    <div class="skeleton h-4 w-3/4 rounded"></div>
+                    <div class="skeleton h-4 w-1/3 rounded"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="gridHewan" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 hidden"></div>
+
+        <!-- Pagination container -->
+        <div id="pagination" class="flex justify-center items-center gap-2 mt-10"></div>
+
+        <div id="kosong" class="hidden text-center py-24">
+            <p class="text-6xl mb-4">🐄</p>
+            <p class="text-lg font-medium text-gray-400">Tidak ada hewan yang sesuai filter</p>
+            <button onclick="resetFilter()" class="text-green-600 text-sm mt-2 hover:underline">Reset filter</button>
+        </div>
+    </section>
+
+    <!-- MODAL DETAIL -->
+    <div id="modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-screen overflow-y-auto">
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- CTA WHATSAPP -->
+    <section class="bg-green-700 py-14 px-4 mt-8">
+        <div class="max-w-2xl mx-auto text-center text-white">
+            <p class="text-3xl font-bold mb-3">Ada pertanyaan?</p>
+            <p class="text-green-200 mb-8">Konsultasikan kebutuhan hewan ternak Anda langsung via WhatsApp</p>
+            <a href="https://wa.me/6285742651615" target="_blank"
+               class="inline-flex items-center gap-2 bg-white text-green-700 font-bold px-8 py-4 rounded-2xl hover:bg-green-50 transition text-sm shadow-lg">
+                💬 Chat WhatsApp Sekarang
+            </a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-400 pt-14 pb-8">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-2xl img">
+                            <img src="/logo.png" alt="">
+                        </span>
+                        <span class="text-white font-bold text-lg">Berkah Pak Lurah</span>
+                    </div>
+                    <p class="text-sm leading-relaxed text-gray-500">
+                        Menyediakan hewan ternak sehat dan berkualitas untuk kebutuhan qurban maupun harian.
+                    </p>
+                </div>
+                <div>
+                    <p class="text-white font-semibold text-sm mb-4">Kategori</p>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" onclick="filterByKategori('Kambing')" class="hover:text-white transition cursor-pointer">Kambing</a></li>
+                        <li><a href="#" onclick="filterByKategori('Sapi')" class="hover:text-white transition cursor-pointer">Sapi</a></li>
+                        <li><a href="#" onclick="filterByKategori('Domba')" class="hover:text-white transition cursor-pointer">Domba</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="text-white font-semibold text-sm mb-4">Hubungi Kami</p>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-2"><span>📍</span><span>Jakarta, Indonesia</span></li>
+                        <li class="flex items-center gap-2"><span>📞</span>
+                            <a href="https://wa.me/6285742651615" target="_blank" class="hover:text-white transition">0857-4265-1615</a>
+                        </li>
+                        <li class="flex items-center gap-2"><span>🕐</span><span>Senin–Minggu, 07.00–20.00</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-6 text-center">
+                <p class="text-xs text-gray-600">© 2025 Berkah Pak Lurah. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+<script>
+const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT-be3T2m-IdzrCvxbrU5RBRwZWjsCdU8JO31A9nAvRaKMlCVbk84QJjaCZ9lqCVfr20ppGuqeroqwS/pub?gid=0&single=true&output=csv';
+const WA_NUMBER = '6285742651615';
+const PER_PAGE = 8;
+
+let allData = [];
+let filteredData = [];
+let currentPage = 1;
+
+const emojiMap = { 'kambing': '🐐', 'sapi': '🐄', 'domba': '🐑' };
+function getEmoji(kategori) { return emojiMap[kategori.toLowerCase()] || '🐄'; }
+function formatRupiah(angka) { return 'Rp ' + parseInt(angka).toLocaleString('id-ID'); }
+
+async function fetchData() {
+    try {
+        const res = await fetch(SHEET_URL);
+        const text = await res.text();
+        const rows = text.trim().split('\n');
+        const headers = rows[0].split(',').map(h => h.trim().replace(/"/g, ''));
+        allData = rows.slice(1).map(row => {
+            const vals = row.split(','); // Menggunakan split sederhana untuk penanganan kolom kosong yang lebih baik
+            const obj = {};
+            headers.forEach((h, i) => { obj[h] = (vals[i] || '').replace(/"/g, '').trim(); });
+            return obj;
+        });
+        filteredData = [...allData];
+        document.getElementById('skeleton').classList.add('hidden');
+        document.getElementById('gridHewan').classList.remove('hidden');
+        renderHalaman(1);
+    } catch(e) {
+        document.getElementById('skeleton').innerHTML = `
+            <div class="col-span-4 text-center py-20 text-gray-400">
+                <p class="text-4xl mb-4">⚠️</p>
+                <p>Gagal memuat data. Coba refresh halaman.</p>
+            </div>`;
+    }
+}
+
+function renderHalaman(page) {
+    currentPage = page;
+    const totalPage = Math.ceil(filteredData.length / PER_PAGE);
+    const start = (page - 1) * PER_PAGE;
+    const end = start + PER_PAGE;
+    const pageData = filteredData.slice(start, end);
+
+    const grid = document.getElementById('gridHewan');
+    const kosong = document.getElementById('kosong');
+    const jumlah = document.getElementById('jumlahHewan');
+
+    const tersedia = filteredData.filter(d => d.status === 'tersedia');
+    jumlah.textContent = tersedia.length;
+
+    if (filteredData.length === 0) {
+        grid.classList.add('hidden');
+        kosong.classList.remove('hidden');
+        document.getElementById('pagination').innerHTML = '';
+        return;
+    }
+
+    kosong.classList.add('hidden');
+    grid.classList.remove('hidden');
+
+    grid.innerHTML = pageData.map(h => `
+        <div onclick="bukaModal(${h.id})" class="bg-white rounded-2xl border border-gray-100 shadow-sm card-hover overflow-hidden cursor-pointer group">
+            <div class="relative h-48 bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
+                ${h.foto
+                    ? `<img src="${h.foto}" alt="${h.nama}" class="img-cover group-hover:scale-105 transition-transform duration-300">`
+                    : `<div class="flex items-center justify-center h-full"><span class="text-7xl opacity-80">${getEmoji(h.kategori)}</span></div>`
+                }
+                <div class="absolute top-3 left-3 flex flex-col gap-1">
+                    ${h.is_qurban === 'ya' ? '<span class="bg-green-600 text-white text-xs px-2.5 py-1 rounded-full font-medium shadow-sm">Qurban</span>' : ''}
+                    ${h.status === 'habis' ? '<span class="bg-red-500 text-white text-xs px-2.5 py-1 rounded-full font-medium shadow-sm">Habis</span>' : ''}
+                </div>
+            </div>
+            <div class="p-4">
+                <div class="flex items-center gap-1.5 mb-2">
+                    <span class="text-xs text-green-700 font-medium bg-green-50 px-2 py-0.5 rounded-full">${h.kategori}</span>
+                    <span class="text-xs text-gray-400">${h.gender}</span>
+                </div>
+                <h3 class="font-semibold text-gray-800 text-sm leading-snug mb-1">${h.nama}</h3>
+                <p class="text-xs text-gray-400 mb-3">⚖️ ${h.berat} kg</p>
+                <div class="flex items-center justify-between">
+                    <p class="text-green-700 font-bold text-base">${formatRupiah(h.harga)}</p>
+                    <span class="text-xs text-gray-300 group-hover:text-green-500 transition">→</span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+
+    // Render pagination
+    renderPagination(page, totalPage);
+
+    // Scroll ke atas grid
+    document.getElementById('katalog').scrollIntoView({ behavior: 'smooth' });
+}
+
+function renderPagination(current, total) {
+    if (total <= 1) {
+        document.getElementById('pagination').innerHTML = '';
+        return;
+    }
+
+    let pages = [];
+
+    // Tombol prev
+    pages.push(`
+        <button onclick="renderHalaman(${current - 1})" ${current === 1 ? 'disabled' : ''}
+            class="w-9 h-9 flex items-center justify-center rounded-xl border border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition text-sm">
+            ←
+        </button>
+    `);
+
+    // Nomor halaman
+    for (let i = 1; i <= total; i++) {
+        if (
+            i === 1 || i === total ||
+            (i >= current - 1 && i <= current + 1)
+        ) {
+            pages.push(`
+                <button onclick="renderHalaman(${i})"
+                    class="w-9 h-9 flex items-center justify-center rounded-xl text-sm font-medium transition
+                    ${i === current
+                        ? 'bg-green-600 text-white shadow-sm'
+                        : 'border border-gray-200 text-gray-600 hover:bg-gray-50'
+                    }">
+                    ${i}
+                </button>
+            `);
+        } else if (
+            i === current - 2 || i === current + 2
+        ) {
+            pages.push(`<span class="w-9 h-9 flex items-center justify-center text-gray-400 text-sm">...</span>`);
+        }
+    }
+
+    // Tombol next
+    pages.push(`
+        <button onclick="renderHalaman(${current + 1})" ${current === total ? 'disabled' : ''}
+            class="w-9 h-9 flex items-center justify-center rounded-xl border border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition text-sm">
+            →
+        </button>
+    `);
+
+    document.getElementById('pagination').innerHTML = pages.join('');
+}
+
+function bukaModal(id) {
+    const h = allData.find(d => parseInt(d.id) === id);
+    if (!h) return;
+    const waText = encodeURIComponent(`Assalamualaikum, saya tertarik dengan ${h.nama} seharga ${formatRupiah(h.harga)}. Apakah masih tersedia?`);
+    document.getElementById('modalContent').innerHTML = `
+        <div class="relative">
+            <button onclick="tutupModal()" class="absolute top-4 right-4 z-10 bg-white/80 backdrop-blur rounded-full w-8 h-8 flex items-center justify-center text-gray-600 hover:bg-white shadow-sm">✕</button>
+            <div class="relative h-72 md:h-80 bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden rounded-t-3xl">
+                ${h.foto
+                    ? `<img src="${h.foto}" alt="${h.nama}" class="modal-img-contain">`
+                    : `<div class="flex items-center justify-center h-full"><span class="text-9xl opacity-70">${getEmoji(h.kategori)}</span></div>`
+                }
+            </div>
+            <div class="p-6">
+                <div class="flex flex-wrap gap-2 mb-3">
+                    <span class="bg-green-50 text-green-700 text-xs font-medium px-3 py-1 rounded-full">${h.kategori}</span>
+                    ${h.is_qurban === 'ya' ? '<span class="bg-yellow-50 text-yellow-700 text-xs font-medium px-3 py-1 rounded-full">🌙 Siap Qurban</span>' : ''}
+                    <span class="bg-${h.status === 'tersedia' ? 'green' : 'red'}-50 text-${h.status === 'tersedia' ? 'green' : 'red'}-600 text-xs font-medium px-3 py-1 rounded-full">
+                        ${h.status === 'tersedia' ? '✅ Tersedia' : '❌ Habis'}
+                    </span>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">${h.nama}</h2>
+                <div class="bg-gray-50 rounded-2xl p-4 mb-4 space-y-2">
+                    <div class="flex justify-between text-sm"><span class="text-gray-500">Kategori</span><span class="font-medium">${h.kategori}</span></div>
+                    <div class="border-t border-gray-100"></div>
+                    <div class="flex justify-between text-sm"><span class="text-gray-500">Jenis Kelamin</span><span class="font-medium">${h.gender}</span></div>
+                    <div class="border-t border-gray-100"></div>
+                    <div class="flex justify-between text-sm"><span class="text-gray-500">Berat</span><span class="font-medium">${h.berat} kg</span></div>
+                </div>
+                ${h.deskripsi ? `<p class="text-sm text-gray-500 mb-4">${h.deskripsi}</p>` : ''}
+                <div class="flex items-baseline gap-2 mb-4">
+                    <p class="text-3xl font-bold text-green-700">${formatRupiah(h.harga)}</p>
+                    <span class="text-sm text-gray-400">/ ekor</span>
+                </div>
+                ${h.status === 'tersedia'
+                    ? `<a href="https://wa.me/${WA_NUMBER}?text=${waText}" target="_blank"
+                        class="w-full flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-2xl transition">
+                        💬 Pesan via WhatsApp
+                       </a>
+                       <p class="text-xs text-gray-400 text-center mt-2">Respon cepat · Harga bisa negosiasi</p>`
+                    : `<button disabled class="w-full bg-gray-100 text-gray-400 font-semibold py-3 px-6 rounded-2xl cursor-not-allowed">Stok Habis</button>`
+                }
+            </div>
+        </div>
+    `;
+    document.getElementById('modal').classList.remove('hidden');
+    document.getElementById('modal').classList.add('flex');
+}
+
+function tutupModal() {
+    document.getElementById('modal').classList.add('hidden');
+    document.getElementById('modal').classList.remove('flex');
+}
+
+document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) tutupModal();
+});
+
+function applyFilter() {
+    const kategori = document.getElementById('filterKategori').value;
+    const minHarga = parseInt(document.getElementById('filterMinHarga').value) || 0;
+    const maxHarga = parseInt(document.getElementById('filterMaxHarga').value) || Infinity;
+    const qurban = document.getElementById('filterQurban').checked;
+
+    filteredData = allData.filter(h => {
+        const harga = parseInt(h.harga);
+        if (kategori && h.kategori !== kategori) return false;
+        if (harga < minHarga || harga > maxHarga) return false;
+        if (qurban && h.is_qurban !== 'ya') return false;
+        return true;
+    });
+
+    renderHalaman(1);
+}
+
+function resetFilter() {
+    document.getElementById('filterKategori').value = '';
+    document.getElementById('filterMinHarga').value = '';
+    document.getElementById('filterMaxHarga').value = '';
+    document.getElementById('filterQurban').checked = false;
+    filteredData = [...allData];
+    renderHalaman(1);
+}
+
+function filterByKategori(kategori) {
+    document.getElementById('filterKategori').value = kategori;
+    applyFilter();
+}
+
+fetchData();
+</script>
+
+</body>
+</html>
