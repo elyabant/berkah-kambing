@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berkah Pak Lurah</title>
-    <meta name="description" content="Jual kambing, sapi, dan domba sehat untuk qurban. Free ongkir radius 10km.">
+    <title>Berkah Domba Pak Lurah</title>
+    <meta name="description" content="Jual kambing dan domba sehat untuk qurban.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -52,7 +52,7 @@
                     <img src="/logo.png" alt="">
                 </span>
                 <div>
-                    <span class="text-xl font-bold text-green-700">Berkah</span>
+                    <span class="text-xl font-bold text-green-700">Berkah Domba</span>
                     <span class="text-xl font-light text-gray-400"> Pak Lurah</span>
                 </div>
             </a>
@@ -77,11 +77,11 @@
                 <span class="text-green-300">Sehat & Terpercaya</span>
             </h1>
             <p class="text-green-100 text-lg mb-10 max-w-xl mx-auto">
-                Kambing, Sapi & Domba pilihan langsung dari kandang. Sehat, gemuk, dan siap untuk kebutuhan Anda.
+                Kambing & Domba pilihan langsung dari kandang. Sehat, gemuk, dan siap untuk Qurban kebutuhan Anda.
             </p>
             <div class="flex flex-wrap justify-center gap-3 text-sm">
                 <span class="bg-white/10 border border-white/20 px-4 py-2 rounded-full">✅ Hewan Sehat & Gemuk</span>
-                <span class="bg-white/10 border border-white/20 px-4 py-2 rounded-full">🚚 Free Ongkir 10km</span>
+                <span class="bg-white/10 border border-white/20 px-4 py-2 rounded-full">🐄 Hewan Siap Qurban</span>
                 <span class="bg-white/10 border border-white/20 px-4 py-2 rounded-full">🛡️ Garansi Hewan</span>
                 <span class="bg-white/10 border border-white/20 px-4 py-2 rounded-full">🏠 Free Penitipan</span>
             </div>
@@ -97,7 +97,6 @@
                     <select id="filterKategori" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-gray-50">
                         <option value="">Semua Hewan</option>
                         <option value="Kambing">Kambing</option>
-                        <option value="Sapi">Sapi</option>
                         <option value="Domba">Domba</option>
                     </select>
                 </div>
@@ -211,7 +210,7 @@
                         <span class="text-2xl img">
                             <img src="/logo.png" alt="">
                         </span>
-                        <span class="text-white font-bold text-lg">Berkah Pak Lurah</span>
+                        <span class="text-white font-bold text-lg">Berkah Domba Pak Lurah</span>
                     </div>
                     <p class="text-sm leading-relaxed text-gray-500">
                         Menyediakan hewan ternak sehat dan berkualitas untuk kebutuhan qurban maupun harian.
@@ -221,14 +220,13 @@
                     <p class="text-white font-semibold text-sm mb-4">Kategori</p>
                     <ul class="space-y-2 text-sm">
                         <li><a href="#" onclick="filterByKategori('Kambing')" class="hover:text-white transition cursor-pointer">Kambing</a></li>
-                        <li><a href="#" onclick="filterByKategori('Sapi')" class="hover:text-white transition cursor-pointer">Sapi</a></li>
                         <li><a href="#" onclick="filterByKategori('Domba')" class="hover:text-white transition cursor-pointer">Domba</a></li>
                     </ul>
                 </div>
                 <div>
                     <p class="text-white font-semibold text-sm mb-4">Hubungi Kami</p>
                     <ul class="space-y-3 text-sm">
-                        <li class="flex items-start gap-2"><span>📍</span><span>Jakarta, Indonesia</span></li>
+                        <li class="flex items-start gap-2"><span>📍</span><span>Kwadasan, Kewadasari, Banyudono, Kec.Dukun, Kab.Magelang, Jawa Tengah 56482</span></li>
                         <li class="flex items-center gap-2"><span>📞</span>
                             <a href="https://wa.me/6285742651615" target="_blank" class="hover:text-white transition">0857-4265-1615</a>
                         </li>
@@ -237,7 +235,7 @@
                 </div>
             </div>
             <div class="border-t border-gray-800 pt-6 text-center">
-                <p class="text-xs text-gray-600">© 2025 Berkah Pak Lurah. All rights reserved.</p>
+                <p class="text-xs text-gray-600">© 2025 Berkah Domba Pak Lurah. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -251,7 +249,7 @@ let allData = [];
 let filteredData = [];
 let currentPage = 1;
 
-const emojiMap = { 'kambing': '🐐', 'sapi': '🐄', 'domba': '🐑' };
+const emojiMap = { 'kambing': '🐐','domba': '🐑' };
 function getEmoji(kategori) { return emojiMap[kategori.toLowerCase()] || '🐄'; }
 function formatRupiah(angka) { return 'Rp ' + parseInt(angka).toLocaleString('id-ID'); }
 
